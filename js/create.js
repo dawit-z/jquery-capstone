@@ -1,0 +1,32 @@
+$(() => {
+  $("#submit").click(() => {
+    create()
+  })
+})
+
+function create() {
+  let user = {
+    id: 0,
+    username: $("#iUsername").val(),
+    password: "Train@MAX",
+    firstname: $("#iFirstname").val(),
+    lastname: $("#iLastname").val(),
+    phone: $("#iPhone").val(),
+    email: $("#iEmail").val(),
+    isReviewer: $("#iReviewer").prop("checked"),
+    isAdmin: $("#iAdmin").prop("checked"),
+  }
+  console.debug(user)
+  $.ajax({
+    url: "http://localhost:27091/api/users/",
+    method: "POST",
+    data: JSON.stringify(user),
+    contentType: "application/json",
+  })
+    .then((res) => {
+      console.debug(res)
+    })
+    .fail((err) => {
+      console.error(err)
+    })
+}
