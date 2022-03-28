@@ -1,25 +1,56 @@
 let user
 
 $(() => {
-  $('#get').click(() => {
-    let id = $('#xId').val()
+  $("#get").click(() => {
+    let id = $("#xId").val()
     display(id)
+  })
+
+  $("#save").click(() => {
+    save()
   })
 })
 
 function display(id) {
-  $.getJSON('http://localhost:27091/api/users/' + id)
+  $.getJSON("http://localhost:27091/api/users/" + id)
     .then((res) => {
       user = res
       console.debug(res)
-      $('#iId').val(user.id)
-      $('#iUsername').val(user.username)
-      $('#iFirstname').val(user.firstname)
-      $('#iLastname').val(user.lastname)
-      $('#iPhone').val(user.phone)
-      $('#iEmail').val(user.email)
-      $('#iReviewer').prop('checked', user.isReviewer)
-      $('#iAdmin').prop('checked', user.isAdmin)
+      $("#iId").val(user.id)
+      $("#iUsername").val(user.username)
+      $("#iFirstname").val(user.firstname)
+      $("#iLastname").val(user.lastname)
+      $("#iPhone").val(user.phone)
+      $("#iEmail").val(user.email)
+      $("#iReviewer").prop("checked", user.isReviewer)
+      $("#iAdmin").prop("checked", user.isAdmin)
+    })
+    .fail((err) => {
+      console.error(err)
+    })
+}
+
+function save() {
+  let user = {
+    id: +$("#iId").val(),
+    username: $("#iUsername").val(),
+    password: "Train@MAX",
+    firstname: $("#iFirstname").val(),
+    lastname: $("#iLastname").val(),
+    phone: $("#iPhone").val(),
+    email: $("#iEmail").val(),
+    isReviewer: $("#iReviewer").prop("checked"),
+    isAdmin: $("#iAdmin").prop("checked"),
+  }
+  console.debug(user)
+  $.ajax({
+    url: "http://localhost:27091/api/users/" + user.id,
+    method: "PUT",
+    data: JSON.stringify(user),
+    contentType: "application/json",
+  })
+    .then((res) => {
+      console.log(res)
     })
     .fail((err) => {
       console.error(err)
