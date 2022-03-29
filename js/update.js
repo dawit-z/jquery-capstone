@@ -5,7 +5,6 @@ $(() => {
     let id = $("#xId").val()
     display(id)
   })
-
   $("#save").click(() => {
     save()
   })
@@ -25,13 +24,11 @@ function display(id) {
       $("#iReviewer").prop("checked", user.isReviewer)
       $("#iAdmin").prop("checked", user.isAdmin)
     })
-    .fail((err) => {
-      console.error(err)
-    })
+    .fail((err) => console.error(err))
 }
 
 function save() {
-  let user = {
+  user = {
     id: +$("#iId").val(),
     username: $("#iUsername").val(),
     password: "Train@MAX",
