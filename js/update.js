@@ -1,10 +1,11 @@
 let user
+let parms
 
 $(() => {
-  $("#get").click(() => {
-    let id = $("#xId").val()
-    display(id)
-  })
+  parms = getUrlParms()
+  console.debug("Parms:", parms)
+  display(parms.id)
+
   $("#save").click(() => {
     save()
   })
@@ -48,6 +49,7 @@ function save() {
   })
     .then((res) => {
       console.log(res)
+      document.location.href = "index.html"
     })
     .fail((err) => {
       console.error(err)
